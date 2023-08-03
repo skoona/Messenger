@@ -1,9 +1,10 @@
 package repository
 
 import (
+	"Messenger/internal/core/domain"
 	"errors"
 	"fmt"
-	"Messenger/internal/core/domain"
+	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -14,11 +15,11 @@ type MessengerPostgresRepository struct {
 }
 
 func NewMessengerPostgresRepository() *MessengerPostgresRepository {
-	host := "localhost"
+	host := os.Getenv("PGSQL_HOST")
 	port := "5432"
-	user := "postgres"
-	password := "pass1234"
-	dbname := "postgres"
+	user := os.Getenv("PGSQL_USER")
+	password := os.Getenv("PGSQL_PW")
+	dbname := os.Getenv("PGSQL_DB")
 
 	conn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
 		host,
