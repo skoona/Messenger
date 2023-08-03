@@ -3,3 +3,4 @@
 dataDB/
 cmd/bin/
 bin/
+.envrc
