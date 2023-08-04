@@ -14,23 +14,22 @@ A go implementation of the Hexagonal Architecture, taken from the article by: [A
 ├── README.md
 ├── bin
 │   └── messenger
-├── cmd
-│   └── main.go
 ├── go.mod
 ├── go.sum
-└── internal
-    ├── adapters
-    │   ├── handler
-    │   │   └── http.go
-    │   └── repository
-    │       ├── postgres.go
-    │       └── redis.go
-    └── core
-        ├── domain
-        │   └── model.go
-        ├── ports
-        │   └── ports.go
-        └── services
-            └── services.go
+├── internal
+│   ├── adapters
+│   │   ├── handler
+│   │   │   └── http.go
+│   │   └── repository
+│   │       ├── postgres.go
+│   │       └── redis.go
+│   └── core
+│       ├── domain
+│       │   └── model.go
+│       ├── ports
+│       │   └── ports.go
+│       └── services
+│           └── services.go
+└── main.go
 ```
 

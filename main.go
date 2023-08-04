@@ -3,12 +3,13 @@ package main
 // ref: https://www.golinuxcloud.com/hexagonal-architectural-golang/
 
 import (
-	"flag"
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"Messenger/internal/adapters/handler"
 	"Messenger/internal/adapters/repository"
 	"Messenger/internal/core/services"
+	"flag"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"os"
 )
 
 var (
@@ -27,7 +28,12 @@ func main() {
 		store := repository.NewMessengerRedisRepository(redisHost)
 		svc = services.NewMessengerService(store)
 	default:
-		store := repository.NewMessengerPostgresRepository()
+		dbhost := os.Getenv("PGSQL_HOST")
+		port := "5432"
+		dbuser := os.Getenv("PGSQL_USER")
+		dbpassword := os.Getenv("PGSQL_PW")
+		dbname := os.Getenv("PGSQL_DB")
+		store := repository.NewMessengerPostgresRepository(dbhost, port, dbuser, dbpassword, dbname)
 		svc = services.NewMessengerService(store)
 	}
 
@@ -37,9 +43,9 @@ func main() {
 
 func InitRoutes() {
 	router := gin.Default()
-	handler := handler.NewHTTPHandler(*svc)
-	router.GET("/messages/:id", handler.ReadMessage)
-	router.GET("/messages", handler.ReadMessages)
-	router.POST("/messages", handler.SaveMessage)
+	httpHandler = handler.NewHTTPHandler(*svc)
+	router.GET("/messages/:id", httpHandler.ReadMessage)
+	router.GET("/messages", httpHandler.ReadMessages)
+	router.POST("/messages", httpHandler.SaveMessage)
 	router.Run(":3000")
 }
