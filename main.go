@@ -43,6 +43,8 @@ func main() {
 
 func InitRoutes() {
 	router := gin.Default()
+	router.ForwardedByClientIP = true
+	router.SetTrustedProxies([]string{"127.0.0.1", "10.100.1.0/24", "10.100.20.0/24"})
 	httpHandler = handler.NewHTTPHandler(*svc)
 	router.GET("/messages/:id", httpHandler.ReadMessage)
 	router.GET("/messages", httpHandler.ReadMessages)
